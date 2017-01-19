@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import * as actions from '../../actions'
 
 class SignIn extends Component {
+
   handleFormSubmit({ email, password }) {
     // Need to do something to log user in
     this.props.signinUser({ email, password })
@@ -22,7 +23,7 @@ class SignIn extends Component {
 
   render() {
     // handleSubmit is coming from the reduxForm library
-    const { fields: { email, password }, handleSubmit } = this.props
+    const { handleSubmit } = this.props
 
     return (
       <form onSubmit={ handleSubmit(this.handleFormSubmit.bind(this)) }>
@@ -48,7 +49,6 @@ function mapStateToProps(state) {
 export default compose(
   connect(mapStateToProps, actions),
   reduxForm({
-  form: 'signin',
-  fields: ['email', 'password'] //matching the server
+  form: 'signin'
   })
 )(SignIn)

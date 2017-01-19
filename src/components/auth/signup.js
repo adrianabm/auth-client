@@ -4,23 +4,30 @@ import * as actions from '../../actions'
 
 class Signup extends Component {
   render() {
-    const { fields: { email, password, passwordConfirm }, handleSubmit } = this.props
+    const { handleSubmit } = this.props
 
     return (
       <form>
         <fieldset className="form-group">
           <label>Email:</label>
-          <Field name="email" component="input" className="form-control" />
+          <Field name="email"
+            component="input"
+             className="form-control" />
         </fieldset>
         <fieldset className="form-group">
           <label>Password:</label>
-          <Field name="password" component="input" type="password" className="form-control" />
+          <Field name="password"
+            component="input"
+            type="password"
+            className="form-control" />
         </fieldset>
         <fieldset className="form-group">
           <label>Password Confirmation:</label>
-          <Field name="passwordConfirm" component="input" type="password" className="form-control" />
+          <Field name="passwordConfirm"
+            component="input"
+            type="password"
+            className="form-control" />
         </fieldset>
-        {/* { this.renderAlert() } */}
         <button action="submit" className="btn btn-primary">Sign Up!</button>
       </form>
     )
@@ -29,5 +36,5 @@ class Signup extends Component {
 
 export default reduxForm({
   form: 'signup',
-  fields: ['email', 'password', 'passwordConfirm']
+  validate
 })(Signup)
