@@ -4,18 +4,32 @@ import * as actions from '../../actions'
 
 const validate = formProps => {
   const errors = {}
-  if (formProps.password !== formProps.passwordConfirm) {
-    errors.password = 'Passwords must match'
+
+  if (!formProps.email) {
+    errors.email = 'Please enter an email'
+  }
+
+  if (!formProps.password) {
+    errors.password = 'Please enter a password'
+  }
+
+  if (!formProps.passwordConfirm) {
+    errors.passwordConfirm = 'Please enter a password confirmation'
+  }
+
+  if (formProps.passwordConfirm !== formProps.password) {
+    errors.passwordConfirm = 'Passwords must match'
   }
 
   return errors
 }
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
+  <fieldset className="form-group">
+    <label>{ label }</label>
     <input {...input} type={type} className="form-control"/>
     {touched && error && <span className="error">{error}</span>}
-  </div>
+  </fieldset>
 )
 
 class Signup extends Component {
@@ -25,23 +39,17 @@ class Signup extends Component {
 
     return (
       <form>
-        <fieldset className="form-group">
-          <label>Email:</label>
           <Field name="email"
-            component={renderField} />
-        </fieldset>
-        <fieldset className="form-group">
-          <label>Password:</label>
+            component={renderField}
+            label="Email:" />
           <Field name="password"
             component={renderField}
-            type="password" />
-        </fieldset>
-        <fieldset className="form-group">
-          <label>Password Confirmation:</label>
+            type="password"
+            label="Password:"/>
           <Field name="passwordConfirm"
             component={renderField}
-            type="password" />
-        </fieldset>
+            type="password"
+            label="Password Confirmation:"/>
         <button action="submit" className="btn btn-primary">Sign Up!</button>
       </form>
     )

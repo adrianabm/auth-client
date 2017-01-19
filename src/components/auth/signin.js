@@ -4,6 +4,28 @@ import {compose} from 'redux'
 import {connect} from 'react-redux'
 import * as actions from '../../actions'
 
+const validate = formProps => {
+  const errors = {}
+
+  if (!formProps.email) {
+    errors.email = 'Please enter an email'
+  }
+
+  if (!formProps.password) {
+    errors.password = 'Please enter a password'
+  }
+
+  return errors
+}
+
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+  <fieldset className="form-group">
+    <label>{ label }</label>
+    <input {...input} type={type} className="form-control"/>
+    {touched && error && <span className="error">{error}</span>}
+  </fieldset>
+)
+
 class SignIn extends Component {
 
   handleFormSubmit({ email, password }) {
@@ -27,14 +49,13 @@ class SignIn extends Component {
 
     return (
       <form onSubmit={ handleSubmit(this.handleFormSubmit.bind(this)) }>
-        <fieldset className="form-group">
-          <label>Email:</label>
-          <Field name="email" component="input" className="form-control" />
-        </fieldset>
-        <fieldset className="form-group">
-          <label>Password:</label>
-          <Field name="password" component="input" type="password" className="form-control" />
-        </fieldset>
+          <Field name="email"
+            component={renderField}
+            label="Email:" />
+          <Field name="password"
+            component={renderField}
+            type="password"
+            label="Password:" />
         { this.renderAlert() }
         <button action="submit" className="btn btn-primary">Sign In</button>
       </form>
@@ -49,6 +70,7 @@ function mapStateToProps(state) {
 export default compose(
   connect(mapStateToProps, actions),
   reduxForm({
-  form: 'signin'
+  form: 'signin',
+  validate
   })
 )(SignIn)
