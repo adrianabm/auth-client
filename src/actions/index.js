@@ -17,13 +17,26 @@ export function signinUser({ email, password }) {
       localStorage.setItem('token', response.data.token)
       // - Redirect to the route '/feature'
       browserHistory.push('/feature')
-
-
     })
     .catch(() => {
       // If request is bad...
       // - Show an error to the user
       dispatch(authError('Bad Login Info.'))
+    })
+  }
+}
+
+export function signupUser({ email, password }) {
+
+  return function(dispatch) {
+    axios.post(`${API_URL}/signup`, { email, password })
+      .then( response => {
+        dispatch({ type: AUTH_USER })
+        localStorage.setItem('token', response.data.token)
+        browserHistory.push('/feature')
+      })
+      .catch(error => {
+        dispatch(authError(error.response.data.error))
     })
   }
 }

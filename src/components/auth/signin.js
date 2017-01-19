@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
-import {compose} from 'redux'
-import {connect} from 'react-redux'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
 const validate = formProps => {
@@ -37,7 +37,7 @@ class SignIn extends Component {
     if (this.props.errorMessage) {
       return (
         <div className="alert alert-danger">
-          <strong>Oops! { this.props.errorMessage }</strong>
+          <strong>Oops!</strong> { this.props.errorMessage }
         </div>
       )
     }

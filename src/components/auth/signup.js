@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+
 import * as actions from '../../actions'
+
 
 const validate = formProps => {
   const errors = {}
@@ -34,11 +38,26 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
 
 class Signup extends Component {
 
+  handleFormSubmit(formProps) {
+    // Call action creator to sign up the user
+    this.props.signupUser(formProps)
+  }
+
+  renderAlert() {
+    if (this.props.errorMessage) {
+      return (
+        <div className="alert alert-danger">
+          <strong>Oops!</strong> { this.props.errorMessage }
+        </div>
+      )
+    }
+  }
+
   render() {
     const { handleSubmit } = this.props
 
     return (
-      <form>
+      <form onSubmit={ handleSubmit(this.handleFormSubmit.bind(this)) }>
           <Field name="email"
             component={renderField}
             label="Email:" />
@@ -50,13 +69,21 @@ class Signup extends Component {
             component={renderField}
             type="password"
             label="Password Confirmation:"/>
+          { this.renderAlert() }
         <button action="submit" className="btn btn-primary">Sign Up!</button>
       </form>
     )
   }
 }
 
-export default reduxForm({
+function mapStateToProps(state) {
+  return { errorMessage: state.auth.error }
+}
+
+export default compose(
+  connect(mapStateToProps, actions),
+  reduxForm({
   form: 'signup',
   validate
-})(Signup)
+  })
+)(Signup)

@@ -13,7 +13,7 @@ class Header extends Component {
     if (this.props.authenticated) {
       return (
         <li className="nav-item">
-          <Link to={ this.handleSignout.bind(this) } className="nav-link">Sign Out</Link>
+          <a onClick={ this.handleSignout.bind(this) } className="nav-link">Sign Out</a>
         </li>
       )
     } else {
