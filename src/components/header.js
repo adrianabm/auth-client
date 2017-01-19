@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import * as actions from '../actions'
 
 class Header extends Component {
+  handleSignout() {
+    this.props.signoutUser().push('/')
+  }
+
   renderLinks() {
-    console.log(this.props.authenticated)
 
     if (this.props.authenticated) {
       return (
         <li className="nav-item">
-          <Link to="/signout" className="nav-link">Sign Out</Link>
+          <Link className="nav-link" to={ this.handleSignout.bind(this) } className="nav-link">Sign Out</Link>
         </li>
       )
     } else {
@@ -42,4 +46,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Header)
+export default connect(mapStateToProps, actions)(Header)
