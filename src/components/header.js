@@ -5,7 +5,7 @@ import * as actions from '../actions'
 
 class Header extends Component {
   handleSignout() {
-    this.props.signoutUser().push('/')
+    this.props.signoutUser()
   }
 
   renderLinks() {
